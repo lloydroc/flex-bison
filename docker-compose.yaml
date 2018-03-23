@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  fb:
+    container_name: fb
+    image: examples/fb
+    volumes:
+      - .:/code
+    build:
+      context: .
