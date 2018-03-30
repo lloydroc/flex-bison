@@ -1,4 +1,8 @@
-all: fb1-4 fb1-5
+all: fb1-4 fb1-5 soundmeter
+soundmeter: soundmeter.l
+	flex soundmeter.l
+	cc -o $@ lex.yy.c -lfl
+	./soundmeter soundmeter.txt
 fb1-4:
 	flex fb1-4.l
 	cc -o $@ lex.yy.c -lfl
