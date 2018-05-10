@@ -1,0 +1,9 @@
+lex.yy.c
+*.tab.h
+*.tab.c
+*.lex.c
+fb1-4
+fb1-5
+fb3-1
+fb3-1.y
+soundmeter
