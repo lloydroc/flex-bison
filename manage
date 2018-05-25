@@ -1,0 +1,70 @@
+#!/bin/sh
+
+CONTAINER_TAG="flex-bison/examples"
+CONTAINER_NAME="fb"
+
+print_usage() {
+  echo "$0 [start|restart|stop|cli|logs]"
+}
+
+if [ $# -ne 1 ]; then
+  print_usage
+  exit 0
+fi
+
+get_container() {
+  CONTAINER_ID=$(docker ps -a -f name=$CONTAINER_NAME -q)
+}
+
+remove_container() {
+  get_container
+  if [ -z $CONTAINER_ID ]; then
+    echo "Container $CONTAINER_NAME not running"
+  else
+    echo "Removing $CONTAINER_ID"
+    docker rm -f $CONTAINER_ID
+  fi
+}
+
+run_container() {
+  get_container
+  echo $CONTAINER_ID
+  if [ -z $CONTAINER_ID ]; then
+    docker build -t=$CONTAINER_TAG .
+    CONTAINER_ID=$(docker run -d --name $CONTAINER_NAME $CONTAINER_TAG)
+  else
+    echo "Container $CONTAINER_NAME already running with ID $CONTAINER_ID"
+  fi
+}
+
+case $1 in
+  "start" )
+    run_container
+    ;;
+  "restart" )
+    remove_container
+    run_container
+    ;;
+   "stop" )
+     remove_container
+     ;;
+   "logs" )
+     get_container
+     if [ -z $CONTAINER_ID ]; then
+       echo "Container $CONTAINER_NAME not running"
+     else
+       docker logs -f $CONTAINER_ID
+     fi
+     ;;
+  "cli" )
+     get_container
+     if [ -z $CONTAINER_ID ]; then
+       echo "Container $CONTAINER_NAME not running"
+     else
+       docker exec -it $CONTAINER_ID bash
+     fi
+     ;;
+  *)
+    print_usage
+     ;;
+esac
