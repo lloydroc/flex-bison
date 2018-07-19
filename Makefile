@@ -1,4 +1,4 @@
-all: fb1-4 fb1-5 soundmeter
+all: arr-ex1 fb1-4 fb1-5 soundmeter
 soundmeter: soundmeter.l
 	flex soundmeter.l
 	cc -o $@ lex.yy.c -lfl
@@ -19,4 +19,4 @@ arr-ex1: arr-ex1.l arr-ex1.y
 	flex -o arr-ex1.lex.c arr-ex1.l
 	cc -o $@ arr-ex1.tab.c arr-ex1.lex.c -lfl
 clean:
-	rm fb1-5
+	rm fb1-5 arr-ex1 fb3-1 fb1-4

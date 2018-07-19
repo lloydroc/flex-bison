@@ -1,6 +1,8 @@
 /* simplest version of a calculator */
 %{
 #include <stdio.h>
+int yylex();
+void yyerror(char *s);
 %}
 
 /* declare tokens */
@@ -35,6 +37,7 @@ main(int argc, char **argv)
   yyparse();
 }
 
+void
 yyerror(char *s)
 {
   fprintf(stderr,"error %s\n",s);

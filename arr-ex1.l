@@ -5,8 +5,8 @@ int yylval;
 %}
 
 %%
-"{"    { return LBRAC; }
-"}"    { return RBRAC; }
+"["    { return LBRAC; }
+"]"    { return RBRAC; }
 ","    { return COMMA; }
 [0-9]+ { yylval = atoi(yytext); return NUM; }
 \n     { return EOL; }
